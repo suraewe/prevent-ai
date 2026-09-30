@@ -1,13 +1,13 @@
 """
-PREVENT AI — Streamlit Dashboard
+PREVENT AI | Streamlit Dashboard
 =================================
 Predictive Vector-borne Epidemic Network Tracker using AI
 
 Interactive dashboard featuring:
-  🗺️  Risk heatmap of Bhopal, Ashta, VIT Bhopal
-  📊  Model comparison metrics
-  🔮  Live prediction form
-  📈  Trend analysis charts
+   Risk heatmap of Bhopal, Ashta, VIT Bhopal
+   Model comparison metrics
+   Live prediction form
+   Trend analysis charts
 """
 
 import streamlit as st
@@ -26,7 +26,7 @@ from streamlit_folium import st_folium
 # Page Config & Paths
 # ─────────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="PREVENT AI — Disease Outbreak Predictor",
+    page_title="PREVENT AI | Disease Outbreak Predictor",
     page_icon="🦟",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -42,75 +42,55 @@ CONFIG_PATH = os.path.join(SCRIPT_DIR, "config.json")
 # ─────────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-    /* ─── Import Google Font ─── */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
     /* ─── Global ─── */
     .stApp {
-        font-family: 'Inter', sans-serif;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        background-color: #121212;
+        color: #e0e0e0;
     }
 
     /* ─── Header Hero ─── */
     .hero-container {
-        background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-        border-radius: 20px;
+        background: #18181b;
+        border-radius: 12px;
         padding: 2.5rem 3rem;
         margin-bottom: 2rem;
-        border: 1px solid rgba(255,255,255,0.08);
-        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         position: relative;
         overflow: hidden;
     }
-    .hero-container::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -20%;
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
-        border-radius: 50%;
-    }
     .hero-title {
-        font-size: 2.8rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #ffffff;
         margin-bottom: 0.3rem;
         letter-spacing: -0.5px;
     }
     .hero-subtitle {
-        color: rgba(255,255,255,0.6);
+        color: #a1a1aa;
         font-size: 1.05rem;
         font-weight: 400;
-        letter-spacing: 0.3px;
     }
 
     /* ─── Metric Cards ─── */
     .metric-card {
-        background: linear-gradient(145deg, rgba(30,30,50,0.95) 0%, rgba(20,20,35,0.98) 100%);
-        border-radius: 16px;
+        background: #18181b;
+        border-radius: 12px;
         padding: 1.5rem;
-        border: 1px solid rgba(255,255,255,0.06);
-        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         text-align: center;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
     }
     .metric-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 40px rgba(99,102,241,0.15);
-        border-color: rgba(99,102,241,0.3);
+        border-color: rgba(59, 130, 246, 0.3);
     }
     .metric-value {
         font-size: 2.2rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        font-weight: 700;
+        color: #3b82f6; /* Subtle blue */
     }
     .metric-label {
-        color: rgba(255,255,255,0.5);
+        color: #a1a1aa;
         font-size: 0.85rem;
         font-weight: 500;
         text-transform: uppercase;
@@ -122,38 +102,36 @@ st.markdown("""
     .risk-badge {
         display: inline-block;
         padding: 0.4rem 1.2rem;
-        border-radius: 50px;
-        font-weight: 700;
-        font-size: 0.9rem;
-        letter-spacing: 0.5px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.85rem;
     }
-    .risk-low { background: rgba(46,204,113,0.15); color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
-    .risk-medium { background: rgba(243,156,18,0.15); color: #f39c12; border: 1px solid rgba(243,156,18,0.3); }
-    .risk-high { background: rgba(230,126,34,0.15); color: #e67e22; border: 1px solid rgba(230,126,34,0.3); }
-    .risk-critical { background: rgba(231,76,60,0.15); color: #e74c3c; border: 1px solid rgba(231,76,60,0.3); }
+    .risk-low { background: rgba(46,204,113,0.1); color: #2ecc71; border: 1px solid rgba(46,204,113,0.2); }
+    .risk-medium { background: rgba(243,156,18,0.1); color: #f39c12; border: 1px solid rgba(243,156,18,0.2); }
+    .risk-high { background: rgba(230,126,34,0.1); color: #e67e22; border: 1px solid rgba(230,126,34,0.2); }
+    .risk-critical { background: rgba(231,76,60,0.1); color: #e74c3c; border: 1px solid rgba(231,76,60,0.2); }
 
     /* ─── Section Headers ─── */
     .section-header {
-        font-size: 1.4rem;
-        font-weight: 700;
-        color: #e2e8f0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #ffffff;
         margin: 1.5rem 0 1rem 0;
         padding-bottom: 0.5rem;
-        border-bottom: 2px solid rgba(99,102,241,0.3);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     /* ─── Prediction Result Box ─── */
     .prediction-box {
-        background: linear-gradient(145deg, rgba(30,30,50,0.95), rgba(20,20,35,0.98));
-        border-radius: 20px;
+        background: #18181b;
+        border-radius: 12px;
         padding: 2rem;
         text-align: center;
-        border: 1px solid rgba(255,255,255,0.06);
-        box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+        border: 1px solid rgba(255, 255, 255, 0.05);
     }
     .prediction-risk-score {
-        font-size: 4rem;
-        font-weight: 900;
+        font-size: 3.5rem;
+        font-weight: 700;
         line-height: 1;
         margin: 0.5rem 0;
     }
@@ -164,39 +142,40 @@ st.markdown("""
 
     /* ─── Sidebar Styling ─── */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #0f0c29 0%, #1a1a2e 100%);
+        background: #121212;
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
     }
     [data-testid="stSidebar"] .stMarkdown p {
-        color: rgba(255,255,255,0.7);
+        color: #a1a1aa;
     }
 
     /* ─── Model Card ─── */
     .model-card {
-        background: linear-gradient(145deg, rgba(30,30,50,0.9), rgba(20,20,35,0.95));
-        border-radius: 16px;
+        background: #18181b;
+        border-radius: 12px;
         padding: 1.5rem;
-        border: 1px solid rgba(255,255,255,0.06);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         margin-bottom: 1rem;
     }
     .model-name {
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: #a78bfa;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: #ffffff;
         margin-bottom: 0.8rem;
     }
     .model-metric-row {
         display: flex;
         justify-content: space-between;
         padding: 0.3rem 0;
-        border-bottom: 1px solid rgba(255,255,255,0.04);
+        border-bottom: 1px solid rgba(255,255,255,0.05);
     }
     .model-metric-label {
-        color: rgba(255,255,255,0.5);
+        color: #a1a1aa;
         font-size: 0.85rem;
     }
     .model-metric-value {
-        color: #e2e8f0;
-        font-weight: 600;
+        color: #ffffff;
+        font-weight: 500;
         font-size: 0.85rem;
     }
 </style>
@@ -327,7 +306,7 @@ def build_risk_map(df: pd.DataFrame, config: dict, selected_disease: str, select
             fill_opacity=0.6,
             weight=2,
             popup=folium.Popup(popup_html, max_width=280),
-            tooltip=f"{row['zone']} — {row['risk_level']} ({row['risk_score']:.0f})",
+            tooltip=f"{row['zone']} | {row['risk_level']} ({row['risk_score']:.0f})",
         ).add_to(m)
 
     return m
@@ -390,7 +369,7 @@ def main():
     # ── Hero Header ──
     st.markdown("""
     <div class="hero-container">
-        <div class="hero-title">🦟 PREVENT AI</div>
+        <div class="hero-title">PREVENT AI</div>
         <div class="hero-subtitle">
             Predictive Vector-borne Epidemic Network Tracker &nbsp;•&nbsp;
             Bhopal &nbsp;|&nbsp; Ashta &nbsp;|&nbsp; VIT Bhopal
@@ -399,37 +378,37 @@ def main():
     """, unsafe_allow_html=True)
 
     if df is None:
-        st.error("⚠️ No data found! Run `python generate_data.py` first, then `python train_models.py`.")
+        st.error("No data found! Run `python generate_data.py` first, then `python train_models.py`.")
         return
 
     if not models:
-        st.warning("⚠️ No trained models found! Run `python train_models.py` first.")
+        st.warning("No trained models found! Run `python train_models.py` first.")
 
     # ── Sidebar ──
     with st.sidebar:
-        st.markdown("### 🎛️ Controls")
+        st.markdown("### Controls")
         st.markdown("---")
 
         # Filters
-        selected_disease = st.selectbox("🦠 Disease", config["diseases"], index=0)
+        selected_disease = st.selectbox("Disease", config["diseases"], index=0)
 
         years = sorted(df["year"].unique())
-        selected_year = st.selectbox("📅 Year", years, index=len(years) - 1)
+        selected_year = st.selectbox("Year", years, index=len(years) - 1)
 
         month_names = [
             "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December",
         ]
-        selected_month_name = st.selectbox("📆 Month", month_names, index=7)  # August default (monsoon)
+        selected_month_name = st.selectbox("Month", month_names, index=7)  # August default (monsoon)
         selected_month = month_names.index(selected_month_name) + 1
 
         selected_region = st.selectbox(
-            "📍 Region",
+            "Region",
             ["All Regions"] + [r["name"] for r in config["regions"].values()],
         )
 
         st.markdown("---")
-        st.markdown("### 📋 About")
+        st.markdown("### About")
         st.markdown(
             "PREVENT AI uses **XGBoost**, **Random Forest**, and **Logistic Regression** "
             "to predict vector-borne disease outbreak risk based on climate, geography, "
@@ -494,14 +473,14 @@ def main():
 
     # ── Tab Layout ──
     tab_map, tab_predict, tab_models, tab_trends, tab_data = st.tabs([
-        "🗺️ Risk Map", "🔮 Predict", "📊 Model Comparison", "📈 Trends", "📋 Data"
+        "Risk Map", "Predict", "Model Comparison", "Trends", "Data"
     ])
 
     # ════════════════════════════════════════════════════════════════
     # TAB 1: RISK MAP
     # ════════════════════════════════════════════════════════════════
     with tab_map:
-        st.markdown('<div class="section-header">🗺️ Outbreak Risk Map</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header">Outbreak Risk Map</div>', unsafe_allow_html=True)
         st.caption(f"Showing {selected_disease} risk for {month_names[selected_month - 1]} {selected_year}")
 
         risk_map = build_risk_map(df, config, selected_disease, selected_month, selected_year)
@@ -510,17 +489,17 @@ def main():
         # Risk legend
         col_l1, col_l2, col_l3, col_l4 = st.columns(4)
         with col_l1:
-            st.markdown('<span class="risk-badge risk-low">🟢 Low (0-25)</span>', unsafe_allow_html=True)
+            st.markdown('<span class="risk-badge risk-low">Low (0-25)</span>', unsafe_allow_html=True)
         with col_l2:
-            st.markdown('<span class="risk-badge risk-medium">🟡 Medium (25-50)</span>', unsafe_allow_html=True)
+            st.markdown('<span class="risk-badge risk-medium">Medium (25-50)</span>', unsafe_allow_html=True)
         with col_l3:
-            st.markdown('<span class="risk-badge risk-high">🟠 High (50-75)</span>', unsafe_allow_html=True)
+            st.markdown('<span class="risk-badge risk-high">High (50-75)</span>', unsafe_allow_html=True)
         with col_l4:
-            st.markdown('<span class="risk-badge risk-critical">🔴 Critical (75-100)</span>', unsafe_allow_html=True)
+            st.markdown('<span class="risk-badge risk-critical">Critical (75-100)</span>', unsafe_allow_html=True)
 
         # Zone-wise risk table
         if not view_df.empty:
-            st.markdown('<div class="section-header">📋 Zone-wise Risk Breakdown</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-header">Zone-wise Risk Breakdown</div>', unsafe_allow_html=True)
             display_df = view_df[["zone", "region", "risk_score", "risk_level", "avg_temperature_c", "rainfall_mm", "previous_month_cases"]].copy()
             display_df.columns = ["Zone", "Region", "Risk Score", "Risk Level", "Temp (°C)", "Rainfall (mm)", "Prev Cases"]
             display_df = display_df.sort_values("Risk Score", ascending=False).reset_index(drop=True)
@@ -530,22 +509,22 @@ def main():
     # TAB 2: LIVE PREDICTION
     # ════════════════════════════════════════════════════════════════
     with tab_predict:
-        st.markdown('<div class="section-header">🔮 Live Risk Prediction</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header">Live Risk Prediction</div>', unsafe_allow_html=True)
         st.caption("Enter environmental and demographic parameters to get an instant risk assessment.")
 
         if not models:
-            st.warning("⚠️ Train models first to use predictions!")
+            st.warning("Train models first to use predictions!")
         else:
             pred_col1, pred_col2 = st.columns([1, 1])
 
             with pred_col1:
-                st.markdown("##### 🌡️ Climate Parameters")
+                st.markdown("##### Climate Parameters")
                 p_month = st.slider("Month", 1, 12, 8, key="pred_month")
                 p_temp = st.slider("Temperature (°C)", 10.0, 45.0, 30.0, step=0.5, key="pred_temp")
                 p_rain = st.slider("Rainfall (mm)", 0.0, 500.0, 200.0, step=5.0, key="pred_rain")
                 p_humidity = st.slider("Humidity (%)", 10.0, 100.0, 75.0, step=1.0, key="pred_humidity")
 
-                st.markdown("##### 🦠 Disease")
+                st.markdown("##### Disease")
                 p_disease = st.selectbox("Disease", config["diseases"], key="pred_disease")
 
                 # Determine season from month
@@ -556,19 +535,19 @@ def main():
                 st.info(f"Season: **{p_season}**")
 
             with pred_col2:
-                st.markdown("##### 📍 Geographic Parameters")
+                st.markdown("##### Geographic Parameters")
                 p_water = st.slider("Distance to Water Body (km)", 0.1, 5.0, 1.5, step=0.1, key="pred_water")
                 p_veg = st.slider("Vegetation Index (NDVI)", 0.0, 1.0, 0.5, step=0.05, key="pred_veg")
 
-                st.markdown("##### 👥 Demographic Parameters")
+                st.markdown("##### Demographic Parameters")
                 p_pop = st.slider("Population Density (per km²)", 100, 15000, 5000, step=100, key="pred_pop")
                 p_prev = st.number_input("Previous Month Cases", min_value=0, max_value=500, value=15, key="pred_prev")
 
-                st.markdown("##### 🤖 Model Selection")
+                st.markdown("##### Model Selection")
                 p_model = st.selectbox("Select Model", list(models.keys()), key="pred_model")
 
             # Predict button
-            if st.button("🔮 Predict Risk", use_container_width=True, type="primary"):
+            if st.button("Predict Risk", use_container_width=True, type="primary"):
                 risk_label, proba = predict_risk(
                     models, encoders, scaler, p_model,
                     p_month, p_temp, p_rain, p_humidity,
@@ -627,10 +606,10 @@ def main():
     # TAB 3: MODEL COMPARISON
     # ════════════════════════════════════════════════════════════════
     with tab_models:
-        st.markdown('<div class="section-header">📊 Model Performance Comparison</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header">Model Performance Comparison</div>', unsafe_allow_html=True)
 
         if comparison is None:
-            st.warning("⚠️ Train models first to see comparison!")
+            st.warning("Train models first to see comparison!")
         else:
             # Model cards
             model_cols = st.columns(3)
@@ -702,7 +681,7 @@ def main():
                 orientation="h",
                 color="Importance",
                 color_continuous_scale="Viridis",
-                title=f"Feature Importance — {fi_model}",
+                title=f"Feature Importance | {fi_model}",
             )
             fig_fi.update_layout(
                 height=400,
@@ -718,7 +697,7 @@ def main():
     # TAB 4: TRENDS
     # ════════════════════════════════════════════════════════════════
     with tab_trends:
-        st.markdown('<div class="section-header">📈 Disease Trend Analysis</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header">Disease Trend Analysis</div>', unsafe_allow_html=True)
 
         trend_col1, trend_col2 = st.columns(2)
 
@@ -731,7 +710,7 @@ def main():
                 monthly_avg,
                 x="date",
                 y="risk_score",
-                title=f"{selected_disease} — Average Risk Score Over Time",
+                title=f"{selected_disease} | Average Risk Score Over Time",
                 color_discrete_sequence=["#667eea"],
             )
             fig_trend.update_layout(
@@ -762,7 +741,7 @@ def main():
                 y="risk_score",
                 color="risk_score",
                 color_continuous_scale=["#2ecc71", "#f39c12", "#e67e22", "#e74c3c"],
-                title=f"{selected_disease} — Risk by Season",
+                title=f"{selected_disease} | Risk by Season",
             )
             fig_season.update_layout(
                 xaxis_title="Season",
@@ -776,7 +755,7 @@ def main():
             st.plotly_chart(fig_season, use_container_width=True)
 
         # Risk heatmap: Zone × Month
-        st.markdown('<div class="section-header">🔥 Risk Heatmap (Zone × Month)</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header">Risk Heatmap (Zone × Month)</div>', unsafe_allow_html=True)
 
         heat_year = st.selectbox("Year for heatmap", sorted(df["year"].unique()), index=len(years) - 1, key="heat_year")
         heat_data = df[
@@ -788,7 +767,7 @@ def main():
             heat_data,
             color_continuous_scale=["#1a1a2e", "#2ecc71", "#f39c12", "#e67e22", "#e74c3c"],
             labels=dict(x="Month", y="Zone", color="Risk Score"),
-            title=f"{selected_disease} Risk Heatmap — {heat_year}",
+            title=f"{selected_disease} Risk Heatmap | {heat_year}",
             aspect="auto",
         )
         fig_heat.update_layout(
@@ -801,7 +780,7 @@ def main():
         st.plotly_chart(fig_heat, use_container_width=True)
 
         # Correlation matrix
-        st.markdown('<div class="section-header">🔗 Feature Correlation Matrix</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header">Feature Correlation Matrix</div>', unsafe_allow_html=True)
         corr_cols = ["avg_temperature_c", "rainfall_mm", "humidity_pct", "water_proximity_km",
                      "vegetation_index", "population_density", "previous_month_cases", "risk_score"]
         corr_matrix = df[corr_cols].corr()
@@ -825,7 +804,7 @@ def main():
     # TAB 5: RAW DATA
     # ════════════════════════════════════════════════════════════════
     with tab_data:
-        st.markdown('<div class="section-header">📋 Raw Dataset</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-header">Raw Dataset</div>', unsafe_allow_html=True)
         st.caption(f"Showing {len(view_df):,} records for current filters")
 
         st.dataframe(view_df, use_container_width=True, height=500)
@@ -833,7 +812,7 @@ def main():
         # Download button
         csv_export = view_df.to_csv(index=False).encode("utf-8")
         st.download_button(
-            "📥 Download Filtered Data as CSV",
+            "Download Filtered Data as CSV",
             csv_export,
             f"prevent_ai_{selected_disease}_{selected_year}_{selected_month}.csv",
             "text/csv",

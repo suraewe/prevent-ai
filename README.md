@@ -1,4 +1,4 @@
-# 🦟 PREVENT AI
+# PREVENT AI
 
 **Predictive Vector-borne Epidemic Network Tracker using AI**
 
@@ -8,27 +8,27 @@ An AI/ML-powered dashboard that predicts vector-borne disease outbreak risk (Den
 
 ## 🎯 Features
 
-- **🗺️ Interactive Risk Map** — Real-time risk heatmap across 20 monitored zones
-- **🔮 Live Prediction** — Enter parameters and get instant risk assessment
-- **📊 Model Comparison** — Side-by-side comparison of XGBoost, Random Forest, and Logistic Regression
-- **📈 Trend Analysis** — Seasonal patterns, zone-wise heatmaps, and correlation matrices
-- **📋 Data Explorer** — Browse and download raw/filtered data
+- **Interactive Risk Map** | Real-time risk heatmap across 20 monitored zones
+- **Live Prediction** | Enter parameters and get instant risk assessment
+- **Model Comparison** | Side-by-side comparison of XGBoost, Random Forest, and Logistic Regression
+- **Trend Analysis** | Seasonal patterns, zone-wise heatmaps, and correlation matrices
+- **Data Explorer** | Browse and download raw/filtered data
 
 ## 🧠 ML Models
 
 | Model | Description |
 |-------|-------------|
-| **XGBoost** | Gradient-boosted decision trees — best for tabular data |
-| **Random Forest** | Ensemble of decision trees — robust and interpretable |
-| **Logistic Regression** | Linear baseline model — simple but effective |
+| **XGBoost** | Gradient-boosted decision trees | best for tabular data |
+| **Random Forest** | Ensemble of decision trees | robust and interpretable |
+| **Logistic Regression** | Linear baseline model | simple but effective |
 
-## 📍 Regions Covered
+## Regions Covered
 
-- **Bhopal City** — 12 zones (Old Bhopal, New Market, Upper/Lower Lake, Kolar Road, etc.)
-- **Ashta** — 4 zones (Town Center, Industrial Area, Rural East, Nadi Belt)
-- **VIT Bhopal** — 4 zones (Main Campus, Hostel Area, Surrounding Village, Kotri-Kalan)
+- **Bhopal City** | 12 zones (Old Bhopal, New Market, Upper/Lower Lake, Kolar Road, etc.)
+- **Ashta** | 4 zones (Town Center, Industrial Area, Rural East, Nadi Belt)
+- **VIT Bhopal** | 4 zones (Main Campus, Hostel Area, Surrounding Village, Kotri-Kalan)
 
-## 📊 Input Features
+## Input Features
 
 | Feature | Description |
 |---------|-------------|
@@ -103,12 +103,12 @@ prevent ai/
 ## 📦 Tech Stack
 
 - **Python 3.10+**
-- **Streamlit** — Dashboard framework
-- **scikit-learn** — Random Forest, Logistic Regression
-- **XGBoost** — Gradient boosting
-- **Folium** — Interactive maps
-- **Plotly** — Charts and visualizations
-- **Pandas / NumPy** — Data processing
+- **Streamlit** | Dashboard framework
+- **scikit-learn** | Random Forest, Logistic Regression
+- **XGBoost** | Gradient boosting
+- **Folium** | Interactive maps
+- **Plotly** | Charts and visualizations
+- **Pandas / NumPy** | Data processing
 
 ---
 
@@ -118,7 +118,7 @@ See **[DATA_GUIDE.md](DATA_GUIDE.md)** for detailed instructions on replacing sy
 
 ---
 
-## 👥 Team
+## Team
 
 Built as a college project for AI/ML-based prediction model.
 
