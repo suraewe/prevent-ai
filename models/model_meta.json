@@ -1,0 +1,21 @@
+{
+  "feature_columns": [
+    "month",
+    "avg_temperature_c",
+    "rainfall_mm",
+    "humidity_pct",
+    "water_proximity_km",
+    "vegetation_index",
+    "population_density",
+    "previous_month_cases",
+    "disease_encoded",
+    "season_encoded"
+  ],
+  "target_labels": [
+    "Low",
+    "Medium",
+    "High",
+    "Critical"
+  ],
+  "trained_at": "2026-09-29T23:07:13.797017"
+}

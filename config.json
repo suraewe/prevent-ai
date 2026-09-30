@@ -1,0 +1,55 @@
+{
+    "project": "PREVENT AI",
+    "version": "1.0.0",
+    "description": "Predictive Vector-borne Epidemic Network Tracker using AI",
+    "regions": {
+        "bhopal_city": {
+            "name": "Bhopal City",
+            "lat": 23.2599,
+            "lon": 77.4126,
+            "zones": [
+                {"name": "Old Bhopal (Chowk)", "lat": 23.2676, "lon": 77.4120, "water_proximity_km": 0.5, "vegetation_index": 0.65},
+                {"name": "New Market", "lat": 23.2350, "lon": 77.4230, "water_proximity_km": 2.1, "vegetation_index": 0.35},
+                {"name": "Kolar Road", "lat": 23.1750, "lon": 77.4450, "water_proximity_km": 3.5, "vegetation_index": 0.40},
+                {"name": "Habibganj", "lat": 23.2300, "lon": 77.4380, "water_proximity_km": 1.8, "vegetation_index": 0.38},
+                {"name": "Shahpura", "lat": 23.1950, "lon": 77.4350, "water_proximity_km": 2.5, "vegetation_index": 0.42},
+                {"name": "Ayodhya Nagar", "lat": 23.2100, "lon": 77.4550, "water_proximity_km": 4.0, "vegetation_index": 0.30},
+                {"name": "Upper Lake Area", "lat": 23.2500, "lon": 77.3900, "water_proximity_km": 0.2, "vegetation_index": 0.75},
+                {"name": "Lower Lake Area", "lat": 23.2550, "lon": 77.4050, "water_proximity_km": 0.3, "vegetation_index": 0.70},
+                {"name": "Arera Colony", "lat": 23.2200, "lon": 77.4300, "water_proximity_km": 2.0, "vegetation_index": 0.45},
+                {"name": "Bairagarh", "lat": 23.2800, "lon": 77.3700, "water_proximity_km": 1.2, "vegetation_index": 0.55},
+                {"name": "Misrod", "lat": 23.1650, "lon": 77.4600, "water_proximity_km": 3.0, "vegetation_index": 0.48},
+                {"name": "BHEL Area", "lat": 23.2450, "lon": 77.4650, "water_proximity_km": 3.8, "vegetation_index": 0.32}
+            ]
+        },
+        "ashta": {
+            "name": "Ashta",
+            "lat": 23.0150,
+            "lon": 76.7250,
+            "zones": [
+                {"name": "Ashta Town Center", "lat": 23.0150, "lon": 76.7250, "water_proximity_km": 1.0, "vegetation_index": 0.55},
+                {"name": "Ashta Industrial Area", "lat": 23.0200, "lon": 76.7350, "water_proximity_km": 2.5, "vegetation_index": 0.30},
+                {"name": "Ashta Rural East", "lat": 23.0100, "lon": 76.7450, "water_proximity_km": 0.8, "vegetation_index": 0.68},
+                {"name": "Ashta Nadi Belt", "lat": 23.0080, "lon": 76.7150, "water_proximity_km": 0.3, "vegetation_index": 0.72}
+            ]
+        },
+        "vit_bhopal": {
+            "name": "VIT Bhopal University",
+            "lat": 23.0770,
+            "lon": 76.8512,
+            "zones": [
+                {"name": "VIT Main Campus", "lat": 23.0770, "lon": 76.8512, "water_proximity_km": 1.5, "vegetation_index": 0.50},
+                {"name": "VIT Hostel Area", "lat": 23.0780, "lon": 76.8530, "water_proximity_km": 1.8, "vegetation_index": 0.45},
+                {"name": "VIT Surrounding Village", "lat": 23.0720, "lon": 76.8480, "water_proximity_km": 0.6, "vegetation_index": 0.62},
+                {"name": "Kotri-Kalan Area", "lat": 23.0830, "lon": 76.8550, "water_proximity_km": 2.0, "vegetation_index": 0.40}
+            ]
+        }
+    },
+    "diseases": ["Dengue", "Malaria", "Chikungunya"],
+    "risk_levels": {
+        "LOW": {"min_score": 0, "max_score": 25, "color": "#2ecc71", "label": "Low Risk"},
+        "MEDIUM": {"min_score": 25, "max_score": 50, "color": "#f39c12", "label": "Medium Risk"},
+        "HIGH": {"min_score": 50, "max_score": 75, "color": "#e67e22", "label": "High Risk"},
+        "CRITICAL": {"min_score": 75, "max_score": 100, "color": "#e74c3c", "label": "Critical Risk"}
+    }
+}
